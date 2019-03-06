@@ -1,12 +1,13 @@
 const express = require('express');
 const ExpressError = require('./expressError');
 const items = require("./fakeDb");
+const itemRoutes = require("./routes/items");
 const app = express();
 
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use('/items', itemRoutes)
 
 // 404 handler
 app.use(function (req, res, next) {
