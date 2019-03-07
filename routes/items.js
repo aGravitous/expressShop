@@ -3,7 +3,8 @@ const router = new express.Router()
 const items = require("../fakeDb");
 const ExpressError = require("../expressError")
 
-// 
+// Returns array of objects. Objects are items by name
+// and price.
 router.get("", function(req, res, next){
     try {
         return res.json({response: items});
@@ -12,7 +13,8 @@ router.get("", function(req, res, next){
     }
 });
 
-//
+// Add object to fakeDb if json with keys of name and price
+// are sent as json. Returns json of submitted object on success.
 router.post("", function(req, res, next){
     try {
         let item = req.body;
@@ -23,7 +25,8 @@ router.post("", function(req, res, next){
     }
 });
 
-//
+// Search for item by url parameter name. Returns name and price
+// object.
 router.get("/:name", function(req, res, next){
     try {
         let currItem = req.params.name;
@@ -38,7 +41,8 @@ router.get("/:name", function(req, res, next){
     }
 });
 
-// 
+// Allows user to change name, price, or both of item with name
+// of url parameter. Returns modified object.
 router.patch("/:name", function(req, res, next){
     try {
         let currItem = req.params.name;
@@ -66,9 +70,20 @@ router.patch("/:name", function(req, res, next){
     }
 });
 
+// Removes object with url parameter name, returns success message.
 router.delete("/:name", function(req, res, next){
     try {
+        let currItem = req.params.name;
 
+        for (let i = 0; i < items.length; i++){
+            if (items[i].name === currItem){
+                items.splice(i, 1);
+            }
+        }
+
+        return res.json(
+            {message: `${currItem} deleted.`}
+        )
     } catch(err) {
         return next(err);
     }
