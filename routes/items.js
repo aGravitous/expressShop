@@ -56,6 +56,9 @@ router.patch("/:name", function(req, res, next){
         let foundItem = items.find(function(item){
             return currItem === item.name;
         })
+        if (foundItem === undefined){
+            throw new ExpressError("No such item in list.", 404)
+        }
 
         let newItemVals = req.body;
         let keys = Object.keys(newItemVals);
@@ -80,6 +83,12 @@ router.patch("/:name", function(req, res, next){
 router.delete("/:name", function(req, res, next){
     try {
         let currItem = req.params.name;
+        let foundItem = items.find(function(item){
+            return currItem === item.name;
+        })
+        if (foundItem === undefined){
+            throw new ExpressError("No such item in list.", 404)
+        }
 
         for (let i = 0; i < items.length; i++){
             if (items[i].name === currItem){
