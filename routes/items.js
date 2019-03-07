@@ -1,8 +1,17 @@
 const express = require("express");
 const router = new express.Router()
+const items = require("../fakeDb");
 const ExpressError = require("../expressError")
 
-router.get("", function(res, req, next){
+router.get("", function(req, res, next){
+    try {
+        return res.json({response: items});
+    } catch(err) {
+        return next(err);
+    }
+});
+
+router.post("", function(req, res, next){
     try {
 
     } catch(err) {
@@ -10,7 +19,7 @@ router.get("", function(res, req, next){
     }
 });
 
-router.get("", function(res, req, next){
+router.get("/:name", function(req, res, next){
     try {
 
     } catch(err) {
@@ -18,7 +27,7 @@ router.get("", function(res, req, next){
     }
 });
 
-router.get("", function(res, req, next){
+router.patch("/:name", function(req, res, next){
     try {
 
     } catch(err) {
@@ -26,15 +35,7 @@ router.get("", function(res, req, next){
     }
 });
 
-router.get("", function(res, req, next){
-    try {
-
-    } catch(err) {
-        return next(err);
-    }
-});
-
-router.get("", function(res, req, next){
+router.delete("/:name", function(req, res, next){
     try {
 
     } catch(err) {
