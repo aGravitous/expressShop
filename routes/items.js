@@ -13,7 +13,9 @@ router.get("", function(req, res, next){
 
 router.post("", function(req, res, next){
     try {
-
+        let item = req.body;
+        items.push(item);
+        return res.json({item})
     } catch(err) {
         return next(err);
     }
@@ -21,7 +23,14 @@ router.post("", function(req, res, next){
 
 router.get("/:name", function(req, res, next){
     try {
+        let currItem = req.params.name;
 
+        let foundItem = items.find(function(item){
+            console.log(item);
+            return currItem === item.name;
+        })
+        
+        return res.json(foundItem)
     } catch(err) {
         return next(err);
     }
