@@ -17,6 +17,9 @@ router.get("", function(req, res, next){
 // are sent as json. Returns json of submitted object on success.
 router.post("", function(req, res, next){
     try {
+        if (typeof (req.body.name) !== "string" || typeof (req.body.price !== "number")){
+            throw new ExpressError("Please enter string for name and integer for price.", 400)
+        }
         let item = req.body;
         items.push(item);
         return res.json({item})
@@ -34,6 +37,9 @@ router.get("/:name", function(req, res, next){
         let foundItem = items.find(function(item){
             return currItem === item.name;
         })
+        if (foundItem === undefined){
+            throw new ExpressError("No such item in list.", 404)
+        }
 
         return res.json(foundItem);
     } catch(err) {
